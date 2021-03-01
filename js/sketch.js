@@ -15,6 +15,8 @@ let scoreBubbles = [];
 let showScore = true;
 let combo = 0;
 let maxCombo = 0;
+let totalScore = 0;
+let clicks = 0;
 
 // Controls
 let showScoreCheckbox;
@@ -74,11 +76,19 @@ function drawLabels() {
   fill(color('rgba(0, 255, 0, 0.5)'));
   textAlign(RIGHT);
   text(`Max combo: ${maxCombo}`, WIDTH - 10, HEIGHT - 10);
+
+  const averageScore = totalScore === 0 ? 0 : totalScore / clicks;
+  fill(color('rgba(0, 255, 255, 0.5)'));
+  textAlign(RIGHT);
+  text(`Avg score: ${Math.floor(averageScore)}`, WIDTH - 10, HEIGHT - 35);
 }
 
 function mousePressed() {
   if (mouseX > 0 && mouseX < WIDTH && mouseY > 0 && mouseY < HEIGHT) {
     const score = calculateScore();
+    totalScore += score;
+    clicks += 1;
+
     if (score >= 95) {
       combo += 1;
       if (combo > maxCombo) {

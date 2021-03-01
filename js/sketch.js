@@ -72,7 +72,7 @@ function drawLabels() {
 function mousePressed() {
   if (mouseX > 0 && mouseX < WIDTH && mouseY > 0 && mouseY < HEIGHT) {
     const score = calculateScore();
-    if (score > 95) {
+    if (score >= 95) {
       combo += 1;
     } else {
       combo = 0;

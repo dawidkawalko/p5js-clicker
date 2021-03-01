@@ -13,6 +13,7 @@ let timeToPulse = pulseInterval;
 let pulses = [];
 let scoreBubbles = [];
 let showScore = true;
+let combo = 0;
 
 // Controls
 let showScoreCheckbox;
@@ -71,8 +72,14 @@ function drawLabels() {
 function mousePressed() {
   if (mouseX > 0 && mouseX < WIDTH && mouseY > 0 && mouseY < HEIGHT) {
     const score = calculateScore();
+    if (score >= 95) {
+      combo += 1;
+    } else {
+      combo = 0;
+    }
+
     addPulse(mouseX, mouseY, PULSE_RADIUS, score, PULSE_SPEED);
-    addScoreBubble(mouseX, mouseY, score, SCOREBUBBLE_SPEED);
+    addScoreBubble(mouseX, mouseY, score, combo, SCOREBUBBLE_SPEED);
   }
 }
 
@@ -92,6 +99,6 @@ function addPulse(x, y, r, score, speed) {
   pulses.push(new Pulse(x, y, r, score, speed));
 }
 
-function addScoreBubble(x, y, score, speed) {
-  scoreBubbles.push(new ScoreBubble(x, y, score, speed));
+function addScoreBubble(x, y, score, combo, speed) {
+  scoreBubbles.push(new ScoreBubble(x, y, score, combo, speed));
 }

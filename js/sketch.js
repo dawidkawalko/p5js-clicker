@@ -14,6 +14,7 @@ let pulses = [];
 let scoreBubbles = [];
 let showScore = true;
 let combo = 0;
+let maxCombo = 0;
 
 // Controls
 let showScoreCheckbox;
@@ -65,8 +66,14 @@ function drawLabels() {
   textSize(25);
   noStroke();
   fill(color('rgba(255, 255, 255, 0.25)'));
+
+  textAlign(LEFT);
   text('Synchronize your clicks with the pulse', 10, HEIGHT - 35);
   text('Use controls below to change your settings', 10, HEIGHT - 10);
+
+  fill(color('rgba(0, 255, 0, 0.5)'));
+  textAlign(RIGHT);
+  text(`Max combo: ${maxCombo}`, WIDTH - 10, HEIGHT - 10);
 }
 
 function mousePressed() {
@@ -74,6 +81,9 @@ function mousePressed() {
     const score = calculateScore();
     if (score >= 95) {
       combo += 1;
+      if (combo > maxCombo) {
+        maxCombo = combo;
+      }
     } else {
       combo = 0;
     }

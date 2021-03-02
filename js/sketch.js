@@ -60,7 +60,7 @@ function drawPulses() {
 
 function drawScoreBubbles() {
   for (let i = scoreBubbles.length - 1; i >= 0; i--) {
-    if (!scoreBubbles[i].draw(LERP_LIMIT, MAX_SCORE, showScore)) {
+    if (!scoreBubbles[i].draw(LERP_LIMIT, MAX_SCORE)) {
       scoreBubbles.splice(i, 1);
     }
   }
@@ -105,7 +105,7 @@ function mousePressed() {
       score,
       PULSE_SPEED
     );
-    addScoreBubble(mouseX, mouseY, score, combo, SCOREBUBBLE_SPEED);
+    addScoreBubble(mouseX, mouseY, score, combo);
   }
 }
 
@@ -125,6 +125,8 @@ function addPulse(x, y, r, score, speed) {
   pulses.push(new Pulse(x, y, r, score, speed));
 }
 
-function addScoreBubble(x, y, score, combo, speed) {
-  scoreBubbles.push(new ScoreBubble(x, y, score, combo, speed));
+function addScoreBubble(x, y, score, combo) {
+  scoreBubbles.push(
+    new ScoreBubble(x, y, score, combo, SCOREBUBBLE_SPEED, showScore)
+  );
 }

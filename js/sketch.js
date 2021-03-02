@@ -3,7 +3,9 @@ const WIDTH = 900;
 const HEIGHT = 900;
 const LERP_LIMIT = 0.99;
 const PULSE_RADIUS = 300;
-const PULSE_SPEED = 0.05;
+const MIN_PULSE_RADIUS = 10;
+const MAX_PULSE_RADIUS = 1000;
+const PULSE_SPEED = 0.025;
 const SCOREBUBBLE_SPEED = 0.015;
 const MAX_SCORE = 100;
 
@@ -73,12 +75,10 @@ function drawLabels() {
   text('Synchronize your clicks with the pulse', 10, HEIGHT - 35);
   text('Use controls below to change your settings', 10, HEIGHT - 10);
 
-  fill(color('rgba(0, 255, 0, 0.5)'));
   textAlign(RIGHT);
   text(`Max combo: ${maxCombo}`, WIDTH - 10, HEIGHT - 10);
 
   const averageScore = totalScore === 0 ? 0 : totalScore / clicks;
-  fill(color('rgba(0, 255, 255, 0.5)'));
   textAlign(RIGHT);
   text(`Avg score: ${Math.floor(averageScore)}`, WIDTH - 10, HEIGHT - 35);
 }
@@ -98,7 +98,13 @@ function mousePressed() {
       combo = 0;
     }
 
-    addPulse(mouseX, mouseY, PULSE_RADIUS, score, PULSE_SPEED);
+    addPulse(
+      mouseX,
+      mouseY,
+      map(score, 0, MAX_SCORE, MIN_PULSE_RADIUS, MAX_PULSE_RADIUS),
+      score,
+      PULSE_SPEED
+    );
     addScoreBubble(mouseX, mouseY, score, combo, SCOREBUBBLE_SPEED);
   }
 }
